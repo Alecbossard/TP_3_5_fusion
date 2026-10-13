@@ -8,15 +8,34 @@ encore une échéance de décembre 2025 : confirmer l'échéance actuelle en cou
 
 ## Démarrer en simulation (sans microphone ni Processing)
 
-Python 3.10 ou supérieur, avec Tkinter. Sous Ubuntu :
+Environnement utilisé sur les postes du groupe : **Windows avec Python 3.15**.
+Installer Python avec le composant **Tcl/Tk**. Le mode simulation ne nécessite
+aucune bibliothèque Python supplémentaire, aucun microphone et aucun agent Ivy.
 
-```sh
-sudo apt install python3-tk
-python3 app.py
+Ouvrir le dossier contenant `app.py` dans l'Explorateur, saisir `cmd` dans la
+barre d'adresse, puis appuyer sur Entrée. Exécuter :
+
+```bat
+py -3.15 --version
+py -3.15 app.py
 ```
 
-Sous Windows, installer Python avec Tcl/Tk puis lancer `start.bat`.
-Sous Linux/macOS : `./start.sh` (ou `python3 app.py`).
+Ces commandes fonctionnent aussi dans PowerShell. On peut également
+faire un double-clic sur `start.bat`, qui utilise `py -3` (le Python 3 par défaut).
+Si plusieurs versions sont installées, préférer `py -3.15 app.py` pour choisir
+explicitement la version du groupe.
+
+Si `py` n'est pas reconnu mais que `python --version` affiche bien Python 3.15,
+utiliser `python app.py`. Sur les postes disposant d'Altair, `python` peut pointer
+vers le Python d'Altair : utiliser le lanceur `py` pour sélectionner Python 3.15.
+
+Pour vérifier Tkinter :
+
+```bat
+py -3.15 -m tkinter
+```
+
+Une petite fenêtre de démonstration doit s'ouvrir.
 Trois fenêtres s'ouvrent : palette sans boutons, simulateur vocal, gestes.
 Les boutons du simulateur produisent des événements **parole**, pas des clics
 sur la palette. Le dessin dans la fenêtre des gestes produit un événement
@@ -97,10 +116,13 @@ les deux recognizers pour une même commande.
 
 ## Ivy et outils externes
 
-```sh
-python3 -m pip install -r requirements.txt
-python3 app.py --ivy --bus 127.255.255.255:2010
+```bat
+py -3.15 -m pip install -r requirements.txt
+py -3.15 app.py --ivy --bus 127.255.255.255:2010
 ```
+
+La compatibilité de la dépendance `ivy-python` avec Python 3.15 reste à vérifier
+sur les postes du groupe; elle n'a pas été validée par les tests joints.
 
 En mode Ivy, deux agents réels échangent les entrées : `PaletteSimulateursLab35`
 et `FusionLab35`. Une file thread-safe relaie les callbacks au thread Tk.
@@ -133,7 +155,7 @@ Messages reçus : `OneDollarIvy Template=rectangle Confidence=0,92`.
 
 Lancer `ppilot5.exe -b 127.255.255.255:2010`. Le moteur émet
 `ppilot5 Say=...`. Sans ppilot5, les retours restent visibles dans la palette.
-La synthèse réelle n'a pas été testée dans cet environnement Linux.
+La synthèse réelle reste à tester sur les postes Windows du groupe.
 
 La palette est **notre implémentation Tkinter**, ce qui est autorisé par le
 sujet. Elle ne prétend pas être compatible avec le protocole de `Palette.zip`.
@@ -142,9 +164,20 @@ sujet. Elle ne prétend pas être compatible avec le protocole de `Palette.zip`.
 
 Depuis le dossier du projet :
 
-```sh
-python3 -m unittest discover -s tests -v
+```bat
+py -3.15 -m unittest discover -s tests -v
 ```
+
+Pour tester uniquement le moteur et les gestes, sans installer Ivy :
+
+```bat
+py -3.15 -m unittest discover -s tests -p test_fusion.py -v
+```
+
+Les résultats joints dans `docs/validation.txt` ont été produits dans
+l'environnement de préparation sous Linux avec Python 3.12; ils ne constituent
+pas une validation sous Windows/Python 3.15. Relancer les tests sur les postes du
+groupe pour documenter les résultats de cet environnement.
 
 Installer ivy-python pour le test d'intégration réseau. `docs/validation.txt`
 contient la sortie obtenue ici. `tests/test_fusion.py` couvre les règles métier;
@@ -158,7 +191,7 @@ ppilot5 et la reconnaissance de gestes humains nécessitent un essai local.
 - `grammar.grxml` : phrases et fragments vocaux.
 - `docs/rapport.md`, `docs/Rapport_Lab3_5.pdf` : conception et validation.
 - `docs/diagrammes.mmd` : chronogrammes, classes, états.
-- `start.sh`, `start.bat` : points d'entrée.
+- `start.bat` : lanceur Windows; `start.sh` : lanceur fourni pour Linux/macOS.
 
 Avant de rendre : réaliser les essais matériels, personnaliser les modèles de
 gestes, renseigner les auteurs dans le rapport et vérifier l'échéance donnée

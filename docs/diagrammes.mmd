@@ -1,0 +1,104 @@
+%% Diagramme de classes
+classDiagram
+class App {
+ +poll()
+ +render()
+}
+class Transport {
+ +send(message)
+ +feedback(message)
+}
+class FusionEngine {
+ +speech(phrase, confidence)
+ +gesture(name, confidence)
+ +point(x, y)
+ +validate()
+ +tick()
+ +reset()
+}
+class FusionData {
+ action
+ shape
+ color
+ source
+ target
+ color_point
+ references
+ points
+ origins
+ last
+ +assign(key, value, modality)
+ +modalities()
+ +reset()
+}
+class Scene {
+ objects
+ +create(shape, color, position)
+ +select(point, shape, color)
+}
+class Object {
+ id
+ shape
+ color
+ x
+ y
+ +contains(x, y)
+}
+class Recognizer {
+ templates
+ +learn(name, points)
+ +recognize(points)
+}
+App --> Transport
+App --> FusionEngine
+App --> Recognizer
+FusionEngine *-- FusionData
+FusionEngine --> Scene
+Scene *-- Object
+
+%% Machine à états (copier séparément dans un éditeur Mermaid)
+stateDiagram-v2
+ [*] --> REPOS
+ REPOS --> COLLECTE: entrée valide
+ COLLECTE --> COLLECTE: complément valide
+ COLLECTE --> ATTENTE: valider / incomplet ou monomodal
+ ATTENTE --> COLLECTE: complément
+ COLLECTE --> EXECUTION: valider / garde satisfaite
+ ATTENTE --> EXECUTION: valider / garde satisfaite
+ EXECUTION --> AMBIGUITE: sélection non unique
+ AMBIGUITE --> COLLECTE: précision de forme ou couleur
+ EXECUTION --> REPOS: création ou déplacement, reset
+ COLLECTE --> ERREUR: contradiction ou prélèvement vide
+ ATTENTE --> ERREUR: contradiction ou prélèvement vide
+ ERREUR --> REPOS: annuler ou délai
+ COLLECTE --> REPOS: annuler ou délai
+ ATTENTE --> REPOS: annuler ou délai
+ AMBIGUITE --> REPOS: annuler ou délai
+
+%% Chronogramme 1 : parole, geste, clic
+sequenceDiagram
+ participant P as Parole
+ participant G as Geste
+ participant C as Pointage
+ participant F as Fusion
+ P->>F: créer
+ G->>F: rectangle
+ P->>F: rouge
+ C->>F: clic (180,180)
+ P->>F: ici (dans les 3 s)
+ P->>F: valider
+ Note over F: Création : rectangle rouge
+
+%% Chronogramme 2 : déplacement gestuel
+sequenceDiagram
+ participant P as Parole
+ participant G as Geste
+ participant C as Pointage
+ participant F as Fusion
+ G->>F: deplacer
+ P->>F: cet objet
+ C->>F: clic source
+ P->>F: ici
+ C->>F: clic destination
+ P->>F: valider
+ Note over F: Déplacement si sélection unique

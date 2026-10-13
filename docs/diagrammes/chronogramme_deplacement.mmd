@@ -1,0 +1,13 @@
+sequenceDiagram
+ participant P as Parole
+ participant G as Geste
+ participant C as Pointage
+ participant F as Fusion
+ G->>F: deplacer
+ P->>F: cet objet
+ C->>F: clic source
+ P->>F: ici
+ C->>F: clic destination
+ P->>F: valider
+ Note over F: Déplacement si sélection unique
+

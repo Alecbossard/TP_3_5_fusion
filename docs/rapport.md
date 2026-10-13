@@ -90,16 +90,16 @@ Les références expirées non résolues imposent d'annuler et de recommencer.
 
 ### Architecture et classes
 La palette Tkinter est recodée, possibilité explicitement autorisée par le sujet.
-App gère les trois fenêtres; Recognizer produit des événements de geste;
-Transport convertit les événements en messages identiques en local et sur Ivy.
+Application gère les trois fenêtres; Recognizer produit des événements de geste;
+CommunicationIvy convertit les événements en messages identiques en local et sur Ivy.
 En mode Ivy, deux agents réels sont ouverts : FusionLab35 et
 PaletteSimulateursLab35. Les messages sra5 et OneDollarIvy externes peuvent
 remplacer les entrées simulées. Les callbacks déposent les messages dans une
 file thread-safe; le thread graphique traite cette file toutes les 50 ms.
-FusionEngine contient FusionData et applique l'automate. Scene est le modèle
+ControleurDialogue contient ContexteFusion et applique l'automate. Scene est le modèle
 des objets, Object implémente un test géométrique de pointage. La palette lit
 ce modèle et l'affiche. Le projet ne fournit pas un adaptateur de Palette.zip.
-Les diagrammes Mermaid des classes et états sont livrés dans diagrammes.mmd;
+Les diagrammes Mermaid des classes et états sont livrés dans le dossier diagrammes/;
 les figures correspondantes sont dessinées dans le PDF.
 
 ### Actions et événements avant l'automate
@@ -110,7 +110,7 @@ créer/déplacer, produire un retour, réinitialiser la transaction.
 Les entrées de faible confiance ou inconnues ne remplissent aucun slot.
 
 ### Structure de données
-FusionData contient action, shape, color, source, target, color_point;
+ContexteFusion contient action, shape, color, source, target, color_point;
 references stocke les couples (rôle,temps), points les couples (point,temps),
 origins l'origine de chaque slot substantiel et last la dernière activité.
 assign() détecte les contradictions; une répétition vocale d'action/forme
@@ -135,7 +135,7 @@ bloque l'exécution jusqu'à annulation/expiration.
 couleur n'est pas résolue. Une contradiction ou un prélèvement vide mène à
 ERREUR depuis un état de collecte. EXECUTION est synchrone, jamais un état
 où des événements externes sont consommés. Les transitions sont tracées dans
-FusionEngine.history.
+ControleurDialogue.history.
 
 ### Gardes d'exécution
 Créer : action=creer, forme connue, toutes les désignations résolues, au moins
@@ -170,7 +170,7 @@ L'autotest des modèles vérifie le classement de leurs propres tracés; il ne
 mesure pas les performances sur des dessins humains.
 
 ### Mode d'emploi et exemples
-Lancer python3 app.py ou start.bat/start.sh. Aucun microphone nécessaire.
+Lancer py -3.15 src/main.py ou scripts/lancer_simulation.bat. Aucun microphone nécessaire.
 Lancer avec --ivy après installation de requirements.txt pour le bus réel.
 Le README contient les séquences de création, prélèvement et déplacement,
 les commandes de lancement de sra5, OneDollarIvy et ppilot5, et les prérequis.
@@ -188,6 +188,17 @@ appariement temporel déterministe; les séquences guidées réduisent ce probl�
 Le recognizer tolère translation/échelle mais conserve volontairement l'orientation.
 L'ajout de suppression/recoloriage n'est pas nécessaire au cahier des charges.
 
+## Organisation du code après refactoring
+
+Le contrôleur est dans `src/moteur_fusion/controleur.py`, le contexte dans
+`contexte_fusion.py` et le transport/les parseurs dans `communication_ivy.py`.
+Les interfaces sont séparées dans `src/palette`, `src/simulateur_vocal` et
+`src/reconnaissance_gestuelle`. Les scripts de lancement sont dans `scripts/`.
+Les logiciels externes ont leurs emplacements et instructions dans `outils/`.
+Le PDF et les captures initiaux sont conservés; leur description des classes
+FusionEngine/FusionData/Transport correspond désormais à
+ControleurDialogue/ContexteFusion/CommunicationIvy.
+
 ## Sources consultées
 - Sujet et trois figures : truillet/upssitech, SRI/5A/IHM/TP/lab3-5_fusion.md.
 - OneDollarIvy.pde : format Template/Confidence et commandes d'apprentissage.
@@ -197,3 +208,4 @@ L'ajout de suppression/recoloriage n'est pas nécessaire au cahier des charges.
 
 Ces sources sont liées dans le README. La date de remise affichée par le sujet
 en ligne est ancienne; vérifier celle de l'édition actuelle.
+

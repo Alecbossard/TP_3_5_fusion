@@ -6,27 +6,55 @@ Source du sujet : https://github.com/truillet/upssitech/blob/master/SRI/5A/IHM/T
 Les illustrations du sujet sont deux JPG et un PNG. Le sujet en ligne porte
 encore une échéance de décembre 2025 : confirmer l'échéance actuelle en cours.
 
+## Organisation du dépôt
+
+La racine du dépôt correspond à `TP_Fusion_Multimodale/`; le nom du dépôt
+GitHub reste `TP_3_5_fusion`. Les logiciels externes sont séparés de notre code.
+
+| Dossier / fichier | Contenu |
+| --- | --- |
+| `outils/` | Emplacements et consignes des logiciels du cours |
+| `src/moteur_fusion/` | Point d'entrée, contrôleur, contexte, transport Ivy et modèle de scène |
+| `src/simulateur_vocal/` | Panneau de simulation et grammaire `grammar.grxml` |
+| `src/reconnaissance_gestuelle/` | Recognizer, fenêtre d'apprentissage et modèles JSON |
+| `src/palette/` | Palette Tkinter sans boutons |
+| `src/main.py` | Lanceur Python de l'application |
+| `docs/` | Sujet, rapport, diagrammes, captures et résultats des tests |
+| `tests/` | Scénarios métier, intégration Ivy et vérification de l'interface |
+| `scripts/` | Lanceurs Windows et lanceur de développement Linux/macOS |
+| `requirements.txt` | Dépendance optionnelle `ivy-python` |
+| `.gitignore` | Environnements locaux, caches et binaires des outils |
+
+Les dossiers `outils/OneDollarIvy`, `outils/Palette`, `outils/ppilot5_3.3`,
+`outils/Processing`, `outils/sra5` et `outils/visionneur_1_2` contiennent pour
+l'instant leurs instructions. Les logiciels ne sont pas présents dans ce dépôt
+et ne sont pas requis pour le mode simulation. Copier les outils du cours dans
+ces emplacements pour les essais externes.
+
 ## Démarrer en simulation (sans microphone ni Processing)
 
 Environnement utilisé sur les postes du groupe : **Windows avec Python 3.15**.
 Installer Python avec le composant **Tcl/Tk**. Le mode simulation ne nécessite
 aucune bibliothèque Python supplémentaire, aucun microphone et aucun agent Ivy.
 
-Ouvrir le dossier contenant `app.py` dans l'Explorateur, saisir `cmd` dans la
+Ouvrir la racine du projet contenant `README.md` et le dossier `src/` dans l'Explorateur, saisir `cmd` dans la
 barre d'adresse, puis appuyer sur Entrée. Exécuter :
 
 ```bat
 py -3.15 --version
-py -3.15 app.py
+py -3.15 src/main.py
 ```
 
-Ces commandes fonctionnent aussi dans PowerShell. On peut également
-faire un double-clic sur `start.bat`, qui utilise `py -3` (le Python 3 par défaut).
-Si plusieurs versions sont installées, préférer `py -3.15 app.py` pour choisir
+Ces commandes fonctionnent aussi dans PowerShell. Lancer toujours la commande
+Python depuis la racine du projet; les fichiers `.bat` peuvent être lancés
+depuis l’Explorateur, indépendamment du dossier courant. On peut également
+faire un double-clic sur `scripts/lancer_simulation.bat`. Les lanceurs
+utilisent `.venv` lorsqu’il existe, sinon `py -3.15`.
+Si plusieurs versions sont installées, préférer `py -3.15 src/main.py` pour choisir
 explicitement la version du groupe.
 
 Si `py` n'est pas reconnu mais que `python --version` affiche bien Python 3.15,
-utiliser `python app.py`. Sur les postes disposant d'Altair, `python` peut pointer
+utiliser `python src/main.py`. Sur les postes disposant d'Altair, `python` peut pointer
 vers le Python d'Altair : utiliser le lanceur `py` pour sélectionner Python 3.15.
 
 Pour vérifier Tkinter :
@@ -35,8 +63,8 @@ Pour vérifier Tkinter :
 py -3.15 -m tkinter
 ```
 
-Une petite fenêtre de démonstration doit s'ouvrir.
-Trois fenêtres s'ouvrent : palette sans boutons, simulateur vocal, gestes.
+Une petite fenêtre de démonstration doit s'ouvrir; la fermer après vérification.
+Au lancement de l'application, trois fenêtres s'ouvrent : palette sans boutons, simulateur vocal, gestes.
 Les boutons du simulateur produisent des événements **parole**, pas des clics
 sur la palette. Le dessin dans la fenêtre des gestes produit un événement
 **geste**. Seuls les clics dans la palette produisent un **pointage**.
@@ -103,7 +131,7 @@ utilisateur, pas des mesures empiriques. Aucun objet n'est créé/déplacé sans
 ## Apprentissages des gestes - séance 1
 
 Dans la fenêtre des gestes, choisir un nom, cocher « Apprendre », puis tracer.
-Les points sont sauvegardés dans `templates/gestures.json`. Ajouter 3 à 5
+Les points sont sauvegardés dans `src/reconnaissance_gestuelle/templates/gestures.json`. Ajouter 3 à 5
 variantes personnelles pour rectangle, cercle, triangle, losange, deplacer,
 puis décocher « Apprendre ». Tester chaque geste 10 fois; conserver les taux
 observés pour le rapport final. L'apprentissage utilisateur reste à effectuer.
@@ -118,7 +146,7 @@ les deux recognizers pour une même commande.
 
 ```bat
 py -3.15 -m pip install -r requirements.txt
-py -3.15 app.py --ivy --bus 127.255.255.255:2010
+py -3.15 src/main.py --ivy --bus 127.255.255.255:2010
 ```
 
 La compatibilité de la dépendance `ivy-python` avec Python 3.15 reste à vérifier
@@ -134,13 +162,13 @@ Laisser quelques secondes au démarrage Ivy pour la découverte des agents.
 Télécharger sra5 depuis le dépôt du cours et lancer (adapter le chemin) :
 
 ```bat
-sra5.exe -b 127.255.255.255:2010 -p off -g "C:\chemin\tp_fusion\grammar.grxml"
+sra5.exe -b 127.255.255.255:2010 -p off -g "C:\chemin\tp_fusion\src\simulateur_vocal\grammar.grxml"
 ```
 
 La grammaire est **orthographique**, sans sortie sémantique SAPI : utiliser
 `-p off`. Le moteur accepte alors `sra5 Text=... Confidence=...`.
 Le simulateur utilise le format `Parsed` imposé par le sujet, avec des
-expressions correspondant aux concepts acceptés. `grammar.grxml` n'a pas
+expressions correspondant aux concepts acceptés. `src/simulateur_vocal/grammar.grxml` n'a pas
 été chargée ici dans SAPI : vérifier le chargement et la langue française
 sur Windows. Sra5 et ppilot5 ne sont pas inclus dans l'archive.
 
@@ -179,19 +207,43 @@ l'environnement de préparation sous Linux avec Python 3.12; ils ne constituent
 pas une validation sous Windows/Python 3.15. Relancer les tests sur les postes du
 groupe pour documenter les résultats de cet environnement.
 
-Installer ivy-python pour le test d'intégration réseau. `docs/validation.txt`
+Installer ivy-python pour le test d'intégration réseau. Le test d'interface
+nécessite un écran et est ignoré sur Linux sans affichage. Les 31 méthodes ont
+été exécutées après refactoring sous Linux/Python 3.12, avec un écran virtuel;
+leur sortie est dans `docs/validation_refactoring.txt`. `docs/validation.txt`
 contient la sortie obtenue ici. `tests/test_fusion.py` couvre les règles métier;
 `tests/test_ivy.py` vérifie le vrai bus local. Le test des 24 permutations
 compte comme une méthode de test. Le chargement Windows SAPI, le microphone,
 ppilot5 et la reconnaissance de gestes humains nécessitent un essai local.
 
-- `fusion.py` : Scene, Object, FusionData, automate, parseurs.
-- `recognizer.py` : reconnaissance et apprentissage des gestes.
-- `app.py` : fenêtres, file d'événements, transport Ivy/local.
-- `grammar.grxml` : phrases et fragments vocaux.
-- `docs/rapport.md`, `docs/Rapport_Lab3_5.pdf` : conception et validation.
-- `docs/diagrammes.mmd` : chronogrammes, classes, états.
-- `start.bat` : lanceur Windows; `start.sh` : lanceur fourni pour Linux/macOS.
+### Responsabilités des modules
+
+- `src/moteur_fusion/main.py` : paramètres de lancement et création de l'application.
+- `src/moteur_fusion/application.py` : assemblage des fenêtres et file d'événements.
+- `src/moteur_fusion/controleur.py` : automate, temporisation et règles d'exécution.
+- `src/moteur_fusion/contexte_fusion.py` : commande en cours et provenance des slots.
+- `src/moteur_fusion/communication_ivy.py` : transport local/Ivy et parseurs des messages.
+- `src/moteur_fusion/scene.py` : objets et sélection géométrique.
+- `src/moteur_fusion/etats.py`, `vocabulaire.py` : états et vocabulaire partagé.
+- `src/simulateur_vocal/interface.py` : expressions vocales simulées et journal.
+- `src/reconnaissance_gestuelle/` : recognizer et apprentissage.
+- `src/palette/interface.py` : dessin des formes et pointage.
+
+Le rapport PDF et les captures décrivent les comportements initiaux; leur code
+a ensuite été réorganisé sans changer les commandes. Le rapport Markdown et les
+diagrammes ont été mis à jour avec les noms des modules refactorés.
+
+### Mettre à jour une copie locale
+
+Depuis la racine du dépôt, après avoir enregistré ses modifications :
+
+```bat
+git pull --ff-only
+```
+
+Il n'est pas nécessaire de recloner le dépôt. Le point d'entrée est maintenant
+`src/main.py`; les anciens fichiers `app.py`, `fusion.py`, `recognizer.py` et les
+lanceurs à la racine ont été remplacés par les modules et scripts ci-dessus.
 
 Avant de rendre : réaliser les essais matériels, personnaliser les modèles de
 gestes, renseigner les auteurs dans le rapport et vérifier l'échéance donnée
@@ -204,3 +256,4 @@ réalisé en séance ni les tests automatiques comme des essais utilisateurs.
 - https://github.com/truillet/ivy/blob/master/agents/doc_ppilot5.md
 - https://github.com/truillet/OneDollarIvy/blob/main/OneDollarIvy.pde
 - https://github.com/truillet/ivy/blob/master/code/ivyfirst3.py
+

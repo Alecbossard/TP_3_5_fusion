@@ -1,0 +1,18 @@
+stateDiagram-v2
+ [*] --> REPOS
+ REPOS --> COLLECTE: entrée valide
+ COLLECTE --> COLLECTE: complément valide
+ COLLECTE --> ATTENTE: valider / incomplet ou monomodal
+ ATTENTE --> COLLECTE: complément
+ COLLECTE --> EXECUTION: valider / garde satisfaite
+ ATTENTE --> EXECUTION: valider / garde satisfaite
+ EXECUTION --> AMBIGUITE: sélection non unique
+ AMBIGUITE --> COLLECTE: précision de forme ou couleur
+ EXECUTION --> REPOS: création ou déplacement, reset
+ COLLECTE --> ERREUR: contradiction ou prélèvement vide
+ ATTENTE --> ERREUR: contradiction ou prélèvement vide
+ ERREUR --> REPOS: annuler ou délai
+ COLLECTE --> REPOS: annuler ou délai
+ ATTENTE --> REPOS: annuler ou délai
+ AMBIGUITE --> REPOS: annuler ou délai
+

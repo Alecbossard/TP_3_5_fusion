@@ -13,3 +13,4 @@
  <rule id="source"><one-of><item>cet objet</item><item>ce <ruleref uri="#forme"/></item></one-of></rule>
  <rule id="qualificatif"><one-of><item>rouge</item><item>vert</item><item>bleu</item><item>ici</item><item>de cette couleur</item><item>cet objet</item></one-of></rule>
 </grammar>
+

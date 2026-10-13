@@ -1,3 +1,23 @@
+# Python et environnements locaux
 __pycache__/
-*.pyc
+*.py[cod]
 .venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Fichiers de la machine
+.DS_Store
+Thumbs.db
+*.log
+
+# Logiciels locaux volumineux; les instructions et sources restent versionnées
+outils/**/*.exe
+outils/**/*.dll
+outils/**/*.jar
+outils/**/*.zip
+outils/**/*.msi
+outils/**/java/
+outils/**/jdk/
+outils/**/jre/

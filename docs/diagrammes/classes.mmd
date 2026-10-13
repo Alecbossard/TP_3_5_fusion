@@ -1,0 +1,73 @@
+classDiagram
+class Application {
+ +poll()
+ +close()
+}
+class CommunicationIvy {
+ +send(message)
+ +feedback(message)
+}
+class ControleurDialogue {
+ +speech(phrase, confidence)
+ +gesture(name, confidence)
+ +point(x, y)
+ +validate()
+ +tick()
+ +reset()
+}
+class ContexteFusion {
+ action
+ shape
+ color
+ source
+ target
+ color_point
+ references
+ points
+ origins
+ last
+ +assign(key, value, modality)
+ +modalities()
+ +reset()
+}
+class Scene {
+ objects
+ +create(shape, color, position)
+ +select(point, shape, color)
+}
+class Object {
+ id
+ shape
+ color
+ x
+ y
+ +contains(x, y)
+}
+class Recognizer {
+ templates
+ +learn(name, points)
+ +recognize(points)
+}
+Application --> CommunicationIvy
+Application --> ControleurDialogue
+Application --> FenetreGestes
+Application --> SimulateurVocal
+Application --> PaletteDessin
+FenetreGestes --> Recognizer
+ControleurDialogue *-- ContexteFusion
+ControleurDialogue --> Scene
+Scene *-- Object
+
+
+class PaletteDessin {
+ +render(scene, contexte)
+}
+class SimulateurVocal {
+ +say(phrase)
+ +log_message(message)
+}
+class FenetreGestes {
+ +begin(event)
+ +draw(event)
+ +end(event)
+}

@@ -1,0 +1,13 @@
+sequenceDiagram
+ participant P as Parole
+ participant G as Geste
+ participant C as Pointage
+ participant F as Fusion
+ P->>F: créer
+ G->>F: rectangle
+ P->>F: rouge
+ C->>F: clic (180,180)
+ P->>F: ici (dans les 3 s)
+ P->>F: valider
+ Note over F: Création : rectangle rouge
+

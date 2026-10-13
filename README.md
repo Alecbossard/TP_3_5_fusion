@@ -142,6 +142,25 @@ Pour OneDollarIvy : apprendre avec L les noms `rectangle`, `cercle`, `triangle`,
 `losange`, `deplacer`; exporter avec E; reconnaître avec R. Ne pas mélanger
 les deux recognizers pour une même commande.
 
+## Microphone, synthèse et gestes personnels sous Windows
+
+Un lanceur dédié prépare les deux agents vocaux et le moteur Ivy :
+
+```bat
+py -3.15 -m pip install -r requirements.txt
+scripts\tester_materiel.bat
+```
+
+Avec `.venv`, installer la dépendance via `.venv\Scripts\python.exe`.
+Le lanceur cherche les agents sous `outils/`, télécharge leurs ZIP officiels
+s'ils sont absents, puis démarre ppilot5, la palette Ivy et sra5. Il faut un
+microphone configuré et un moteur SAPI français disponible sur Windows.
+Le lancement des fenêtres ne prouve pas que la reconnaissance fonctionne.
+
+Suivre [le protocole des essais matériels](docs/essais_materiels.md) pour tester
+la synthèse, une création réellement prononcée et l'apprentissage de ses
+propres tracés. Les résultats physiques restent à relever sur le poste.
+
 ## Ivy et outils externes
 
 ```bat
@@ -256,4 +275,5 @@ réalisé en séance ni les tests automatiques comme des essais utilisateurs.
 - https://github.com/truillet/ivy/blob/master/agents/doc_ppilot5.md
 - https://github.com/truillet/OneDollarIvy/blob/main/OneDollarIvy.pde
 - https://github.com/truillet/ivy/blob/master/code/ivyfirst3.py
+
 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar version="1.0" xml:lang="fr-FR" mode="voice" root="commande"
+ xmlns="http://www.w3.org/2001/06/grammar">
+ <!-- Grammaire orthographique : lancer sra5 avec -p off. -->
+ <rule id="commande" scope="public"><one-of>
+  <item><ruleref uri="#action"/><item repeat="0-1"><one-of><item>un</item><item>une</item></one-of></item><item repeat="0-1"><ruleref uri="#forme"/></item><item repeat="0-3"><ruleref uri="#qualificatif"/></item></item>
+  <item>déplacer <ruleref uri="#source"/><item repeat="0-3"><ruleref uri="#qualificatif"/></item></item>
+  <item><ruleref uri="#forme"/></item><item><ruleref uri="#qualificatif"/></item>
+  <item>valider</item><item>annuler</item>
+ </one-of></rule>
+ <rule id="action"><one-of><item>créer</item><item>dessiner</item><item>déplacer</item></one-of></rule>
+ <rule id="forme"><one-of><item>rectangle</item><item>cercle</item><item>triangle</item><item>losange</item></one-of></rule>
+ <rule id="source"><one-of><item>cet objet</item><item>ce <ruleref uri="#forme"/></item></one-of></rule>
+ <rule id="qualificatif"><one-of><item>rouge</item><item>vert</item><item>bleu</item><item>ici</item><item>de cette couleur</item><item>cet objet</item></one-of></rule>
+</grammar>

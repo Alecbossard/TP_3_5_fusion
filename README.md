@@ -277,3 +277,21 @@ réalisé en séance ni les tests automatiques comme des essais utilisateurs.
 - https://github.com/truillet/ivy/blob/master/code/ivyfirst3.py
 
 
+
+## Accents des agents Windows
+
+Le transport du projet utilise `compatibilite_ivy.py` pour recevoir les trames
+UTF-8 et celles des anciens agents Windows encodées en CP1252. Les trames TCP
+sont assemblées jusqu'au saut de ligne avant décodage, afin de préserver les
+accents UTF-8 coupés entre deux lectures. La bibliothèque installée et les
+autres applications Python ne sont pas modifiées.
+
+Si une ancienne copie affiche `UnicodeDecodeError` dans `ivy.py`, fermer les
+fenêtres du moteur, récupérer le correctif avec `git pull --ff-only`, puis
+relancer `py -3.15 src/main.py --ivy`. Le message « Agent Ivy Windows détecté »
+est informatif et indique que le décodage CP1252 a été utilisé.
+
+La réception d'une phrase accentuée en CP1252 a été vérifiée sur une connexion
+TCP réelle. Les 36 tests du projet passent sous Linux/Python 3.12 avec un écran
+virtuel; la validation physique Windows reste à effectuer sur le poste.
+

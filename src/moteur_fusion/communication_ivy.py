@@ -9,10 +9,10 @@ class CommunicationIvy:
         self.server = None
         self.output = None
         if bus:
-            from ivy.ivy import IvyServer
+            from .compatibilite_ivy import creer_serveur_compatible
 
-            self.server = IvyServer("FusionLab35")
-            self.output = IvyServer("PaletteSimulateursLab35")
+            self.server = creer_serveur_compatible("FusionLab35")
+            self.output = creer_serveur_compatible("PaletteSimulateursLab35")
             self.server.bind_msg(
                 lambda agent, msg: inbox.put(msg),
                 r"^(sra5 (?:Parsed|Text)=.*|OneDollarIvy Template=.*|Palette Point .*)$",

@@ -1,0 +1,54 @@
+test_cp1252_preserves_accents (test_encodage_ivy.EncodageTests.test_cp1252_preserves_accents) ... ok
+test_legacy_agent_over_real_tcp (test_encodage_ivy.EncodageTests.test_legacy_agent_over_real_tcp) ... Agent Ivy Windows détecté : réception des accents en CP1252.
+ok
+test_mixed_peers_formats (test_encodage_ivy.EncodageTests.test_mixed_peers_formats) ... ok
+test_multiple_frames_and_incomplete_tail (test_encodage_ivy.EncodageTests.test_multiple_frames_and_incomplete_tail) ... ok
+test_utf8_split_at_every_byte (test_encodage_ivy.EncodageTests.test_utf8_split_at_every_byte) ... ok
+test_all_orders_create (test_fusion.FusionTests.test_all_orders_create) ... ok
+test_bad_text_and_bounds (test_fusion.FusionTests.test_bad_text_and_bounds) ... ok
+test_cancel_clears_everything (test_fusion.FusionTests.test_cancel_clears_everything) ... ok
+test_conflict_latched (test_fusion.FusionTests.test_conflict_latched) ... ok
+test_full_speech_after_redundant_gesture (test_fusion.FusionTests.test_full_speech_after_redundant_gesture) ... ok
+test_initial_gesture_templates (test_fusion.FusionTests.test_initial_gesture_templates) ... ok
+test_late_point_not_bound (test_fusion.FusionTests.test_late_point_not_bound) ... ok
+test_low_confidence (test_fusion.FusionTests.test_low_confidence) ... ok
+test_monomodal_rejected (test_fusion.FusionTests.test_monomodal_rejected) ... ok
+test_move_gesture (test_fusion.FusionTests.test_move_gesture) ... ok
+test_move_speech (test_fusion.FusionTests.test_move_speech) ... ok
+test_no_double_validation (test_fusion.FusionTests.test_no_double_validation) ... ok
+test_no_stale_after_execution (test_fusion.FusionTests.test_no_stale_after_execution) ... ok
+test_old_point_not_bound (test_fusion.FusionTests.test_old_point_not_bound) ... ok
+test_optional_defaults (test_fusion.FusionTests.test_optional_defaults) ... ok
+test_overlap_disambiguation (test_fusion.FusionTests.test_overlap_disambiguation) ... ok
+test_parsers (test_fusion.FusionTests.test_parsers) ... ok
+test_point_before_reference (test_fusion.FusionTests.test_point_before_reference) ... ok
+test_redundant_gesture_not_complementary (test_fusion.FusionTests.test_redundant_gesture_not_complementary) ... ok
+test_reference_before_point (test_fusion.FusionTests.test_reference_before_point) ... ok
+test_reverse_reference_order (test_fusion.FusionTests.test_reverse_reference_order) ... ok
+test_same_color_overlap_not_arbitrary (test_fusion.FusionTests.test_same_color_overlap_not_arbitrary) ... ok
+test_sample_color_overlap (test_fusion.FusionTests.test_sample_color_overlap) ... ok
+test_sample_empty_is_error (test_fusion.FusionTests.test_sample_empty_is_error) ... ok
+test_shape_hit_testing (test_fusion.FusionTests.test_shape_hit_testing) ... ok
+test_spoken_shape_point (test_fusion.FusionTests.test_spoken_shape_point) ... ok
+test_text_sra (test_fusion.FusionTests.test_text_sra) ... ok
+test_timeout (test_fusion.FusionTests.test_timeout) ... ok
+test_two_references_consume_two_points (test_fusion.FusionTests.test_two_references_consume_two_points) ... ok
+test_three_windows_create_and_move (test_interface.InterfaceTests.test_three_windows_create_and_move) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py:1012: ResourceWarning: unclosed <socket.socket fd=6, family=2, type=2, proto=0, laddr=('0.0.0.0', 2039)>
+  self._target(*self._args, **self._kwargs)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py:1016: ResourceWarning: unclosed <socket.socket fd=5, family=2, type=1, proto=0, laddr=('0.0.0.0', 43155)>
+  del self._target, self._args, self._kwargs
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_bus_roundtrip (test_ivy.IvyIntegration.test_bus_roundtrip) ... /opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py:1012: ResourceWarning: unclosed <socket.socket fd=9, family=2, type=2, proto=0, laddr=('0.0.0.0', 2035)>
+  self._target(*self._args, **self._kwargs)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py:589: ResourceWarning: unclosed <socket.socket fd=6, family=2, type=1, proto=0, laddr=('0.0.0.0', 42731)>
+  if method() is not None:
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+
+----------------------------------------------------------------------
+Ran 36 tests in 1.637s
+
+OK
